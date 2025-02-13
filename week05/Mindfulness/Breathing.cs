@@ -1,23 +1,31 @@
-class Breathing: Activity{
+class Breathing : Activity
+{
+    public Breathing()
+        : base("Breathing Activity", "This activity will help you relax by walking you through breathing in and out slowly. Clear your mind and focus on your breathing.")
+    { }
 
-    public Breathing ()
-        :base(
-                "Breathing Activity",
-                "This activity will help you relax by walking your way through breathing in and out slowly. Clear your mind and focus on your breathing."
-            )
+    public override void Run()
     {
-         // constructor function body
+        Console.Clear();
+        Console.WriteLine("Welcome to the Breathing Activity");
+        Console.WriteLine(GetDescription());
+        Console.WriteLine("How long, in seconds, would you like for your session?");
+        int time = int.Parse(Console.ReadLine());
+        Console.WriteLine("\nPreparing to start...\n");
+        Program.DisplaySpinner(3, 250);
+
+        for (int i = 0; i < time; i++)
+        {
+            Console.WriteLine("Breathe in...");
+            Thread.Sleep(500);
+            Program.DisplaySpinner(1, 250);
+            Console.WriteLine("Breathe out...");
+            Thread.Sleep(500);
+            Program.DisplaySpinner(1, 250);
+        }
+
+        Console.WriteLine("\nGreat job! You completed the Breathing Activity.");
+        Console.WriteLine($"Time spent: {time} seconds");
+        Program.Pause(3);
     }
- 
-    public override void Run() {
-        Console.WriteLine("We are running the Breathing activity!");
-
-        // print out initial breaht message
-
-        // wait a second
-        // porint out next breath message
-        // maybe this is all in a while loop with a boolean to stop it after a certain amount of seconds
-    }
-
-
 }
