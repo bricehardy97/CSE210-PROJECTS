@@ -1,13 +1,40 @@
-using System.ComponentModel;
-using System.Runtime;
+public class ChecklistGoal : Goal
+{
+    public int Target { get; set; }
+    public int Completed { get; private set; }
 
-_amountCompled: int
-_target: int
-_bonus; int
+    public ChecklistGoal(string name, string description, int points, int target)
+        : base(name, description, points)
+    {
+        Target = target;
+        Completed = 0;
+    }
 
-ChecklistGoal(name, Description, Points, Targetet,bonus)
+    public override void RecordEvent()
+    {
+        if (Completed < Target)
+        {
+            Completed++;
+            int earnedPoints = Points;
+            if (Completed == Target) earnedPoints += 500; // Bonus on completion
+            Console.WriteLine($"Goal '{Name}' recorded! You earned {earnedPoints} points.");
+        }
+    }
 
-RecordEvent():void
-IsComplete()bool
-GetDetailsString():string
-GetStringRepresentation():string
+    public override bool IsComplete()
+    {
+        return Completed >= Target;
+    }
+
+    public override string GetDetailsString()
+    {
+        return IsComplete() 
+            ? $"[X] {Name}: {Description} - Completed {Completed}/{Target} times" 
+            : $"[ ] {Name}: {Description} - Completed {Completed}/{Target} times";
+    }
+
+    public override string GetStringRepresentation()
+    {
+        return $"{Name}|{Description}|{Points}|Checklist|{Target}|{Completed}";
+    }
+}
